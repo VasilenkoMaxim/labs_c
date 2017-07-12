@@ -4,22 +4,25 @@
 #define MaxCharStr 1024
 
 void countnumb(char **str[], int *amount, int N);
-int mysortbubble(int *amount, char **str[], int N); //A-ключ сортировки, B-упорядоченный массив от 0 до N-1
+int mysortbubble(int *amount, char **str[], int N);
 
 
 int main( int argc, char **argv[]){
-	char **str[MaxStr];
-	//Ввод строк asd
+	//Ввод строк
 	printf("%s\n", "Вводите строки, ввод прекратится когда будет введена пустая строка");
-	int N = 0;
-	str[N] = (char *) calloc(MaxCharStr, sizeof(char));
-	gets(str[N]);
-	while (strlen(str[N])>0){
-		N++;
+	int N = 0; //количество введеных строк
+	char **str[MaxStr];
+	do{
 		str[N] = (char *) calloc(MaxCharStr, sizeof(char));
+	//	if ( !str[N] )
+	//		exit(1);
 		gets(str[N]);
-	}
-	free(str[N]);
+		N++;
+	}while ( strlen(str[N-1])>0 );
+	free(str[N-1]);
+	N--;
+
+	//Выделение памяти под массив количества цифр в строках
 	int *amount = (int *) calloc(N, sizeof(int));
 	
 	//Считаем количество цифр в каждой строке
@@ -31,8 +34,9 @@ int main( int argc, char **argv[]){
 		printf("%s %d\n", str[i], amount[i]);
 	}
 
-	
+	//Выводим количество произошедших перестановок
 	printf("%s = %d\n", "Количество перестановок алгоритма пузырик", mysortbubble( amount, str, N));
+	
 	//Выводим после сортировки, а через пробел количество цифр в них
 	printf("%s\n", "После сортировки:");
 	for (int i = 0; i < N; ++i)
@@ -40,11 +44,13 @@ int main( int argc, char **argv[]){
 		printf("%s %d\n", str[i], amount[i]);
 	}
 	
+	//Освобождение памяти выделенной подс троки и под массив количества цифр в строках
 	for (int i = 0; i < N; ++i)
 	{
 		free(str[i]);	
 	}
 	free(amount);
+
 	return 0;
 }
 
