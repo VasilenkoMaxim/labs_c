@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <mcheck.h>
 #define MaxStr 100
 #define MaxCharStr 1024
 
@@ -9,28 +10,25 @@ int mysortbubble(int *amount, char **str[], int N);
 
 int main( int argc, char **argv[]){
 	//Ввод строк
+	mtrace();
 	printf("%s\n", "Вводите строки, ввод прекратится когда будет введена пустая строка");
-	int N = 0; //количество введеных строк
+	int N = -1; //количество введеных строк
 	char **str[MaxStr];
 	do{
-		str[N] = (char *) calloc(MaxCharStr, sizeof(char));
-	//	if ( !str[N] )
-	//		exit(1);
-		gets(str[N]);
 		N++;
-	}while ( strlen(str[N-1])>0 );
-	free(str[N-1]);
-	N--;
-
+		str[N] = (char *) calloc(MaxCharStr, sizeof(char));
+		if ( !str[N] )
+			exit(1);
+		gets(str[N]);
+	}while ( strlen(str[N])>0 );
+	free(str[N]);
 	//Выделение памяти под массив количества цифр в строках
 	int *amount = (int *) calloc(N, sizeof(int));
-	
 	//Считаем количество цифр в каждой строке
 	countnumb( str, amount, N);
-	//Выводим строки сортировки, а через пробел количество цифр в них
+	//Выводим строки до сортировки, а через пробел количество цифр в них
 	printf("%s\n", "До сортировки:");
-	for (int i = 0; i < N; ++i)
-	{
+	for (int i = 0; i < N; ++i){
 		printf("%s %d\n", str[i], amount[i]);
 	}
 
@@ -39,12 +37,11 @@ int main( int argc, char **argv[]){
 	
 	//Выводим после сортировки, а через пробел количество цифр в них
 	printf("%s\n", "После сортировки:");
-	for (int i = 0; i < N; ++i)
-	{
+	for (int i = 0; i < N; ++i){
 		printf("%s %d\n", str[i], amount[i]);
 	}
 	
-	//Освобождение памяти выделенной подс троки и под массив количества цифр в строках
+	//Освобождение памяти выделенной подс строки и под массив количества цифр в строках
 	for (int i = 0; i < N; ++i)
 	{
 		free(str[i]);	
@@ -90,7 +87,9 @@ int mysortbubble(int *amount, char **str[], int N){
 				f=1;
 			}
 		}
-		if ( !f ) break;
+		if ( !f ){
+			break;
+		} 
 	}
 	return count;
 }
