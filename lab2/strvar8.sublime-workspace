@@ -95,7 +95,7 @@
 			"file": "var8.c",
 			"settings":
 			{
-				"buffer_size": 2119,
+				"buffer_size": 2147,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -227,18 +227,18 @@
 				{
 					"buffer": 0,
 					"file": "var8.c",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2119,
+						"buffer_size": 2147,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								676,
+								676
 							]
 						],
 						"settings":
@@ -247,7 +247,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 84.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

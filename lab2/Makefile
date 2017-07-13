@@ -1,6 +1,7 @@
-var8: var8.c
-	gcc -std=c99 -c var8.c
-	gcc -std=c99 var8.c -o var8
-
+run: main
+	./main < test.txt
+main: main.c
+	gcc -Wall -std=c99 -c main.c
+	gcc -Wall -std=c99 main.o -o main
 clear:
-	rm var8 var8.o
+	rm main main.o

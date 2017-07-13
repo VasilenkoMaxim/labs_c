@@ -1,5 +1,7 @@
 *.txt
+main
 !README.txt
+!test.txt
 *.[oa]
 !*.sublime-project
 !*.sublime-workspace
