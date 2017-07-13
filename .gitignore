@@ -1,8 +1,11 @@
 *.txt
+*.*
+!*.sh
 main
 !README.txt
 !test.txt
 *.[oa]
 !*.sublime-project
 !*.sublime-workspace
-!*.[ch]
+!*.c
+!*.h
