@@ -5,16 +5,26 @@
 #define MaxCharStr 1024
 
 struct voucher{
-	char 	name_route[50]; 	//название маршрута, не забывать менять длину массива в readVoucher
+	char 	name_route[30]; 	//название маршрута, не забывать менять длину массива в readVoucher
 	double 	distance; 			//протяженность маршрута в км
 	int 	halt_count; 		//количество остановок
 	double 	route_cost; 		//цена путевки в рублях
 };
 typedef struct voucher voucher;
+
+
+void countnumb(char **str[], int *amount, int N);
+int mysortbubble(int *amount, char **str[], int N);
+
 //MaxLenBuff - максимальный размер строки которую прочитает функция, но не факт что запишет
 //CheckINF - индикатор включения диалога, если 0 то не будут показываться диалоги
 char readVoucher( voucher *vch, int MaxLenBuff, char CheckINF);
 void writeVoucher( voucher *vch);
+int cmpVoucherNameRoute(const void *a, const void *b);
+int cmpVoucherDistance(const void *a, const void *b);
+int cmpVoucherHaltCount(const void *a, const void *b);
+int cmpVoucherRouteCost(const void *a, const void *b);
+
 
 char readVoucher( voucher *vch, int MaxLenBuff, char CheckINF){  //функция для ввода структуры voucher c stdin                 
 	char buffer[MaxLenBuff];
@@ -27,7 +37,7 @@ char readVoucher( voucher *vch, int MaxLenBuff, char CheckINF){  //функци�
 	}
 		fgets( buffer, MaxLenBuff, stdin);
 			sscanf( buffer, "%[^\n]", buffer0);
-				snprintf( vch->name_route, 50, buffer0);
+				snprintf( vch->name_route, 30, buffer0);
 	if ( strlen(vch->name_route ) == 0 ){
 		return 1;	//не было введено название маршрута
 	}
@@ -57,67 +67,57 @@ char readVoucher( voucher *vch, int MaxLenBuff, char CheckINF){  //функци�
 			}
 	return 0;
 }
-
 void writeVoucher( voucher *vch){  //функция для вывода информации структуры voucher в stdout                 
-	printf( "%s %s\n", "Название маршрута:", vch->name_route);	
-	printf("%s = %.2lf км\n", "Протяженность маршрута", vch->distance);
-	printf("%s = %d\n", "Количество остановок", vch->halt_count);
-	printf("%s = %.2lf руб.\n", "Цена путевки", vch->route_cost);
+	printf("%30s%20.2lf%20d%20.2lf\n", vch->name_route, vch->distance, vch->halt_count, vch->route_cost);
+	//printf( "%s %s\n", "Название маршрута:", vch->name_route);	
+	//printf("%s = %.2lf км\n", "Протяженность маршрута", vch->distance);
+	//printf("%s = %d\n", "Количество остановок", vch->halt_count);
+	//printf("%s = %.2lf руб.\n", "Цена путевки", vch->route_cost);
 }
-
-
-
-void countnumb(char **str[], int *amount, int N);
-int mysortbubble(int *amount, char **str[], int N);
-
-
-int main( int argc, char **argv[]){
-	//Ввод строк
-	mtrace();
-	printf("%s\n", "Ввод путевок, следуйте указаниям, введите путую строку, чтобы прекратить ввод");
-	int N = -1; //количество введеных строк
-	voucher** vch[MaxVoucher];
-	do{
-		N++;
-		printf("%s %d\n", "Ввод путевки номер", N+1);
-		vch[N] = (voucher *)malloc(sizeof(voucher));
-		if ( !vch[N] )
-			exit(1);
-	}while ( !readVoucher( vch[N], MaxCharStr, 0) );
-	free(vch[N]);
-
-	for (int i = 0; i < N; ++i)
-	{
-		writeVoucher(vch[i]);	
+int cmpVoucherNameRoute(const void *a, const void *b){
+	voucher *A, *B;
+	A = *((voucher **)a);
+	B = *((voucher **)b);
+	return strcmp( A->name_route, B->name_route);
+}
+int cmpVoucherDistance(const void *a, const void *b){
+	voucher *A, *B;
+	A = *((voucher **)a);
+	B = *((voucher **)b);
+	double eps = 1.0e-15;
+	if ( A->distance - B->distance < -eps ){
+		return -1;
 	}
-	/*
-	//Выделение памяти под массив количества цифр в строках
-	int *amount = (int *) calloc(N, sizeof(int));
-	//Считаем количество цифр в каждой строке
-	countnumb( str, amount, N);
-	//Выводим строки до сортировки, а через пробел количество цифр в них
-	printf("%s\n", "До сортировки:");
-	for (int i = 0; i < N; ++i){
-		printf("%s %d\n", str[i], amount[i]);
+	else if ( A->distance - B->distance > eps ){
+		return 1;
 	}
-
-	//Выводим количество произошедших перестановок
-	printf("%s = %d\n", "Количество перестановок алгоритма пузырик", mysortbubble( amount, str, N));
-	
-	//Выводим после сортировки, а через пробел количество цифр в них
-	printf("%s\n", "После сортировки:");
-	for (int i = 0; i < N; ++i){
-		printf("%s %d\n", str[i], amount[i]);
+	else{
+		return 0;
 	}
-	*/
-	//Освобождение памяти выделенной подс строки и под массив количества цифр в строках
-	for (int i = 0; i < N; ++i)
-	{
-		free(vch[i]);	
+}
+int cmpVoucherHaltCount(const void *a, const void *b){
+	voucher *A, *B;
+	A = *((voucher **)a);
+	B = *((voucher **)b);
+	return A->halt_count - B->halt_count;
+}
+int cmpVoucherRouteCost(const void *a, const void *b){
+	voucher *A, *B;
+	A = *((voucher **)a);
+	B = *((voucher **)b);
+	double eps = 1.0e-15;
+	if ( A->route_cost - B->route_cost < -eps ){
+		return 1;
+		printf("%lf\n", A->route_cost);
 	}
-	//free(amount);
-	
-	return 0;
+	else if ( A->route_cost - B->route_cost > eps ){
+		return -1;
+		printf("%lf\n", A->route_cost);
+	}
+	else{
+		printf("%lf\n", A->route_cost);
+		return 0;
+	}
 }
 
 void countnumb(char **str[], int *amount, int N){   //Вопрос: почему, когда вместо int *amount было int *amount[] то получалась всякая фигня
@@ -134,7 +134,6 @@ void countnumb(char **str[], int *amount, int N){   //Вопрос: почему
 		}
 	}
 }
-
 int mysortbubble(int *amount, char **str[], int N){
 	int tmp;
 	char *p;
@@ -161,4 +160,65 @@ int mysortbubble(int *amount, char **str[], int N){
 		} 
 	}
 	return count;
+}
+
+int main( int argc, char **argv[]){
+	mtrace();
+	printf("%s\n", "Ввод путевок, следуйте указаниям, введите путую строку, чтобы прекратить ввод");
+	int N = -1; //количество введеных структур
+	voucher **vch[MaxVoucher];
+	do{
+		N++;
+		printf("%s %d\n", "Ввод путевки номер", N+1);
+		vch[N] = (voucher *)malloc(sizeof(voucher));
+		if ( !vch[N] )
+			exit(1);
+	}while ( !readVoucher( vch[N], MaxCharStr, 0) );
+	free(vch[N]);
+
+	printf("\n%s\n", "До сортировки");
+	printf("%-47s%-35s%-34s%-35s\n", "Название маршрута", "Протяженность, км", "Кол-во остановок", "Цена, руб.");
+	for (int i = 0; i < N; ++i)
+	{
+		writeVoucher(vch[i]);	
+	}
+
+	qsort( vch, N, sizeof(voucher *), cmpVoucherRouteCost);
+	printf("\n%s\n", "После сортировки по цене по убыванию");
+	printf("%-47s%-35s%-34s%-35s\n", "Название маршрута", "Протяженность, км", "Кол-во остановок", "Цена, руб.");
+	for (int i = 0; i < N; ++i)
+	{
+		writeVoucher(vch[i]);	
+	}
+
+	qsort( vch, N, sizeof(voucher *), cmpVoucherNameRoute);
+	printf("\n%s\n", "После сортировки по названию маршрута");
+	printf("%-47s%-35s%-34s%-35s\n", "Название маршрута", "Протяженность, км", "Кол-во остановок", "Цена, руб.");
+	for (int i = 0; i < N; ++i)
+	{
+		writeVoucher(vch[i]);	
+	}
+
+	qsort( vch, N, sizeof(voucher *), cmpVoucherDistance);
+	printf("\n%s\n", "После сортировки по протяженности по возрастанию");
+	printf("%-47s%-35s%-34s%-35s\n", "Название маршрута", "Протяженность, км", "Кол-во остановок", "Цена, руб.");
+	for (int i = 0; i < N; ++i)
+	{
+		writeVoucher(vch[i]);	
+	}
+
+	qsort( vch, N, sizeof(voucher *), cmpVoucherHaltCount);
+	printf("%s\n", "После сортировки по количеству остановок по возрастанию");
+	printf("%-47s%-35s%-34s%-35s\n", "Название маршрута", "Протяженность, км", "Кол-во остановок", "Цена, руб.");
+	for (int i = 0; i < N; ++i)
+	{
+		writeVoucher(vch[i]);	
+	}
+
+	for (int i = 0; i < N; ++i)
+	{
+		free(vch[i]);	
+	}
+
+	return 0;
 }

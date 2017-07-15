@@ -4,6 +4,46 @@
 		"selected_items":
 		[
 			[
+				"v",
+				"vch"
+			],
+			[
+				"p",
+				"p"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"A",
+				"A"
+			],
+			[
+				"r",
+				"route_cost"
+			],
+			[
+				"Ma",
+				"MaxLenBuff"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"bu",
+				"buffer"
+			],
+			[
+				"d",
+				"d"
+			],
+			[
+				"s",
+				"s"
+			],
+			[
 				"Max",
 				"MaxCharStr"
 			],
@@ -12,16 +52,8 @@
 				"format"
 			],
 			[
-				"d",
-				"d"
-			],
-			[
 				"for",
 				"format"
-			],
-			[
-				"Ma",
-				"MaxLenNameRoute"
 			],
 			[
 				"st",
@@ -36,20 +68,8 @@
 				"char"
 			],
 			[
-				"re",
-				"readVoucher"
-			],
-			[
-				"v",
-				"vch"
-			],
-			[
 				"def",
 				"define"
-			],
-			[
-				"p",
-				"printf\tprintf …"
 			],
 			[
 				"co",
@@ -74,10 +94,6 @@
 			[
 				"N",
 				"N"
-			],
-			[
-				"a",
-				"amount"
 			],
 			[
 				"in",
@@ -127,7 +143,7 @@
 			"file": "main.c",
 			"settings":
 			{
-				"buffer_size": 3504,
+				"buffer_size": 5278,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -232,13 +248,14 @@
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -246,6 +263,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"vouchers",
 			"\"\n"
 		],
 		"highlight": true,
@@ -254,12 +272,13 @@
 		"regex": false,
 		"replace_history":
 		[
+			"voucher"
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
-		"wrap": true
+		"wrap": false
 	},
 	"groups":
 	[
@@ -273,15 +292,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3504,
+						"buffer_size": 5278,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								772,
-								772
+								4291,
+								4291
 							]
 						],
 						"settings":
@@ -290,7 +309,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 306.0,
+						"translation.y": 1632.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
