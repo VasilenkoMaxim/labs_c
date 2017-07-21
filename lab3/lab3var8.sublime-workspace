@@ -4,20 +4,168 @@
 		"selected_items":
 		[
 			[
-				"v",
-				"vch"
+				"Mo",
+				"MONTH"
+			],
+			[
+				"C",
+				"CreateTaskDialog"
+			],
+			[
+				"D",
+				"DeleteFewTask"
+			],
+			[
+				"F",
+				"FTMP0"
+			],
+			[
+				"PATH",
+				"PATHCONFIG"
+			],
+			[
+				"R",
+				"Refresh"
+			],
+			[
+				"M",
+				"MINUTE"
+			],
+			[
+				"le",
+				"let"
+			],
+			[
+				"s",
+				"sortirovka"
+			],
+			[
+				"AR",
+				"ARCHnew"
+			],
+			[
+				"NA",
+				"NAMEnew"
+			],
+			[
+				"PA",
+				"PATHtonew"
+			],
+			[
+				"H",
+				"HOUR"
+			],
+			[
+				"t",
+				"tmpstr"
+			],
+			[
+				"tm",
+				"tmpstr"
+			],
+			[
+				"PAT",
+				"PATHfromnew"
+			],
+			[
+				"ca",
+				"cat"
 			],
 			[
 				"p",
-				"p"
+				"PATHfrom"
 			],
 			[
-				"a",
-				"a"
+				"P",
+				"PATHfrom"
+			],
+			[
+				"DA",
+				"DAYWEEK"
+			],
+			[
+				"tp",
+				"tmpstr"
 			],
 			[
 				"A",
-				"A"
+				"ARG"
+			],
+			[
+				"d",
+				"DAYWEEK"
+			],
+			[
+				"sor",
+				"sortirovka"
+			],
+			[
+				"re",
+				"Refresh"
+			],
+			[
+				"Re",
+				"ReadStrCrontab"
+			],
+			[
+				"a",
+				"abs"
+			],
+			[
+				"N",
+				"N"
+			],
+			[
+				"newM",
+				"newMo"
+			],
+			[
+				"new",
+				"newD"
+			],
+			[
+				"ne",
+				"newH"
+			],
+			[
+				"E",
+				"echo"
+			],
+			[
+				"co",
+				"choice2"
+			],
+			[
+				"c",
+				"choice2"
+			],
+			[
+				"ch",
+				"choice1"
+			],
+			[
+				"e",
+				"echo"
+			],
+			[
+				"раз",
+				"раз"
+			],
+			[
+				"про",
+				"протяженность"
+			],
+			[
+				"М",
+				"маршрута"
+			],
+			[
+				"Н",
+				"Название"
+			],
+			[
+				"v",
+				"vch"
 			],
 			[
 				"r",
@@ -28,20 +176,8 @@
 				"MaxLenBuff"
 			],
 			[
-				"re",
-				"return"
-			],
-			[
 				"bu",
 				"buffer"
-			],
-			[
-				"d",
-				"d"
-			],
-			[
-				"s",
-				"s"
 			],
 			[
 				"Max",
@@ -72,10 +208,6 @@
 				"define"
 			],
 			[
-				"co",
-				"count"
-			],
-			[
 				"i",
 				"i"
 			],
@@ -84,16 +216,8 @@
 				"min"
 			],
 			[
-				"c",
-				"count"
-			],
-			[
 				"n",
 				"numb"
-			],
-			[
-				"N",
-				"N"
 			],
 			[
 				"in",
@@ -104,55 +228,49 @@
 				"argc"
 			],
 			[
-				"H",
-				"H"
-			],
-			[
-				"P",
-				"PATHto"
-			],
-			[
-				"раз",
-				"раз"
-			],
-			[
-				"PA",
-				"PATHto"
-			],
-			[
-				"PAT",
-				"PATHfrom"
-			],
-			[
-				"PATH",
-				"PATHto"
-			],
-			[
 				"pa",
 				"PATHto"
-			],
-			[
-				"ch",
-				"choiceARCH"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "main.c",
+			"file": "/home/maxim/labs_linux/lab8/mybackup.sh",
 			"settings":
 			{
-				"buffer_size": 5278,
+				"buffer_size": 11101,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test.txt",
+			"contents": "#Ключ извлечения записей из crontab\nKEYGREP=\" #mybackup\"\nSH=\"mybackup.sh\"\nPATHCFG=~/.config/mybackup/\n\nDialogCreateEditDelite(){\n\tchoice1=0\n\twhile [[ $choice1 != 4 ]]\n\tdo\n\t\t#Сначало выводить уже имеющиеся а потом диалог\n\t\techo \"Что ты хочешь сделать:\"\n\t\techo \"1) Создать\"\n\t\techo \"2) Редактировать\"\n\t\techo \"3) Удалить\"\n\t\techo \"4) В главное меню\"\n\t\tread choice1\t\n\t\tcase $choice1 in\n\t\t\t1)\n\t\t\t\techo \"Введи путь того, что забэкапить\"\n\t\t\t\tread newPATHfrom\n\t\t\t\techo \"Введи путь куда бэкапить\"\n\t\t\t\tread newPATHto\n\t\t\t\techo \"Введи имя файла/папки\"\n\t\t\t\tread newNAME\n\t\t\t\tif [[ -b $newPATHfrom ]]\n\t\t\t\tthen\n\t\t\t\t\tnewARCH=\"\"\n\t\t\t\telse\n\t\t\t\t\techo \"Нужно ли архивирование: y/n\"\n\t\t\t\t\tread newARCH\n\t\t\t\tfi\n\t\t\t\tchoice2=0\n\t\t\t\twhile [[ $choice1 != 6 ]]\n\t\t\t\tdo\n\t\t\t\t\techo \"Настройка времени бэкапа и его периодичности\"\n\t\t\t\t\techo \"1) Раз в год\"\n\t\t\t\t\techo \"2) Раз в месяц\"\n\t\t\t\t\techo \"3) Раз в неделю\"\n\t\t\t\t\techo \"4) Каждый день\"\n\t\t\t\t\techo \"5) Раз в несколько часов\"\n\t\t\t\t\techo \"6) Отменить все и вернуться в предыдущее меню\"\n\t\t\t\t\tread choice2\n\t\t\t\t\tcase $choice2 in\n\t\t\t\t\t\t1)\t\n\t\t\t\t\t\t\techo \"Введи месяц, день, часы и минуты через пробел\"\n\t\t\t\t\t\t\tread newMo newD newH newM\n\t\t\t\t\t\t\tlet 'n=n+1'\n\t\t\t\t\t\t\techo \"PATHfrom=\\\"$newPATHfrom\\\"\" > $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"PATHto=\\\"$newPATHto\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"NAME=\\\"$newNAME\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"ARCH=\\\"$newARCH\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo $newM\" \"$newH\" \"$newD\" \"$newMo\" * \"$SH\" \"$n\".cfg\"$KEYGREP >> ~/.tmp/mybackup/tmp1.txt\n\t\t\t\t\t\t;;\n\t\t\t\t\t\t2)\n\t\t\t\t\t\t\techo \"Введи день, часы и минуты через пробел\"\n\t\t\t\t\t\t\tread newD newH newM\n\t\t\t\t\t\t\tlet 'n=n+1'\n\t\t\t\t\t\t\techo \"PATHfrom=\\\"$newPATHfrom\\\"\" > $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"PATHto=\\\"$newPATHto\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"NAME=\\\"$newNAME\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"ARCH=\\\"$newARCH\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo $newM\" \"$newH\" \"$newD\" * * \"$SH\" \"$n\".cfg\"$KEYGREP >> ~/.tmp/mybackup/tmp1.txt \n\t\t\t\t\t\t;;\n\t\t\t\t\t\t3)\n\t\t\t\t\t\t\techo \"Введи день недели (1-понедельник, 7-воскресенье), часы и минуты через пробел\"\n\t\t\t\t\t\t\tread newWD newH newM\n\t\t\t\t\t\t\tlet 'n=n+1'\n\t\t\t\t\t\t\techo \"PATHfrom=\\\"$newPATHfrom\\\"\" > $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"PATHto=\\\"$newPATHto\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"NAME=\\\"$newNAME\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo \"ARCH=\\\"$newARCH\\\"\" >> $PATHCFG$n\".cfg\"\n\t\t\t\t\t\t\techo $newM\" \"$newH\" * * \"$newWD\" \"$SH\" \"$n\".cfg\"$KEYGREP >> ~/.tmp/mybackup/tmp1.txt \t\n\t\t\t\t\t\t;;\n\t\t\t\t\t\t4)\n\t\t\t\t\t\t\techo \"Введи часы и минуты через пробел\"\n\t\t\t\t\t\t\tread newH newM\t\n\t\t\t\t\t\t;;\n\t\t\t\t\t\t5)\n\t\t\t\t\t\t\techo \"Введи промежуток в часах (1-24) и минуты через пробел\"\n\t\t\t\t\t\t\tread newH newM\t\n\t\t\t\t\t\t;;\n\t\t\t\t\t\t6)\n\t\t\t\t\t\t\techo \"Меню создания, редактирования и удаления заданий на бэкап:\"\n\t\t\t\t\t\t;;\n\t\t\t\t\t\t*)\n\t\t\t\t\t\t\techo \"Попробуй еще раз\" \n\t\t\t\t\t\t;;\n\t\t\t\t\tesac\t\t\n\t\t\t\tdone\n\t\t\t;;\n\t\t\t2)\n\t\t\t\techo\n\t\t\t;;\n\t\t\t3)\n\t\t\t\techo\n\t\t\t;;\n\t\t\t4)\n\t\t\t\techo \"Главное меню:\"\n\t\t\t;;\n\t\t\t*)\n\t\t\t\techo \"Попробуй еще раз\"\n\t\t\t;;\n\t\tesac\n\tdone\n\treturn 0\n}\n\n\n\n#Проверяем существует ли пользовательская дир. с *.cfg файлами, если нет, то создаем\nif ! [ -d ~/.config/mybackup/ ]\nthen\n\tmkdir ~/.config/mybackup\nfi\n\n#Проверяем существует ли пользовательская дир. .tmp, если нет, то создаем\nif ! [ -d ~/.tmp/ ]\nthen\n\tmkdir ~/.tmp\nfi\n\n#Проверяем существует ли пользовательская дир. .tmp/mybackup, если нет, то создаем\nif ! [ -d ~/.tmp/mybackup/ ]\nthen\n\tmkdir ~/.tmp/mybackup\nfi\n\nif [[ $1 != \"\" ]]\nthen\n\tsource  $PATHCFG$1  #~/.config/mybackup/i.cfg\n\tif [[ -b $PATHfrom ]]\n\tthen\n\t\tsudo dd if=$PATHfrom of=$PATHto$NAME\".iso\"\n \telif [[ $ARCH == \"y\" ]]\n \tthen\n \t\tcd $PATHfrom && tar -czf $PATHto$NAME\".tgz\" *\n \telif [[ $ARCH == \"n\" ]]\n \tthen\n \t\tcd $PATHfrom && rsync -zr * $PATHto$NAME\"/\"\n\tfi\n\texit 0\nfi\n\n#Читаем файл crontab и создаем временные файлы с записями, относящимися к mybackup и нет\ncrontab -l | grep $KEYGREP > ~/.tmp/mybackup/tmp1.txt\ncrontab -l | grep -v $KEYGREP > ~/.tmp/mybackup/tmp0.txt\n\n#Разбираем записи относящиеся к maybackup на состовляющие\nn=1\ntmpstr=`sed -n \"$n\"p ~/.tmp/mybackup/tmp1.txt | sed \"s/*//g\"`\nwhile [[ $tmpstr != \"\" ]]\ndo\n\ta=($tmpstr)\n\tM[$n]=${a[0]}\n\tH[$n]=${a[1]}\t\n\tif [[ ${a[2]} == $SH ]]\n\tthen\n\t\tFCFG[$n]=${a[3]}\n\telif [[ ${a[3]} == $SH ]]\n\tthen\n\t\tD[$n]=${a[2]}\n\t\tFCFG[$n]=${a[4]}\n\telif [[ ${a[4]} == $SH ]]\n\tthen\n\t\tD[$n]=${a[2]}\n\t \tMo[$n]=${a[3]}\n\t \tFCFG[$n]=${a[5]}\n\telif [[ ${a[5]} == $SH ]]\n\tthen\n\t\tD[$n]=${a[2]}\n\t \tMo[$n]=${a[3]}\n\t \tWD[$n]=${a[4]}\n\t \tFCFG[$n]=${a[6]}\n\tfi\n\tlet 'n=n+1'\n\ttmpstr=`sed -n \"$n\"p ~/.tmp/mybackup/tmp1.txt | sed \"s/*//g\"`\ndone\nlet 'n=n-1'\n\nchoice=0\necho \"Привет чувак, я скрипт backup, что мне сделать:\"\nwhile [[ $choice != 4 ]]\ndo\n\techo \"1) Сделать резервную копию прям сейчас\"\n\techo \"2) Создать, редактировать, удалить задание на автоматическое резервное копирование\"\n\techo \"3) Показать уже имеющиеся задания на резервное копирование\"\n\techo \"4) Ты зашел сюда случайно и хочешь выйти(((\"\n\techo \"PS Введи цифру и нажми Enter\"\n\tread choice\n\n\tcase $choice in\n\t\t1)\n\t\t\techo \"Что ты хочешь скопировать, введи путь директории или укажи блочное устройство\"\n\t\t\tread PATHfrom\n\t\t\techo \"Куда это скопировать, введи путь директории\"\n\t\t\tread PATHto\n\t\t\tif [[ -b $PATHfrom ]]\n\t\t\tthen\n\t\t\t\techo \"Ты указал блочное устройство, введи имя ISO файла\"\n\t\t\t\tread NAME\n\t\t\t\techo \"Возможно придется долго ждать, дождись завершения процесса\"\n\t\t\t\techo \"или нажми Ctr+c, тогда все прервется и данные могут быть повреждены\"\n\t\t\t\tsudo dd if=$PATHfrom of=$PATHto$NAME\".iso\"\n\t\t\t\tif [[ $? = 0 ]]\n\t\t\t\tthen\n\t\t\t\t\techo \"Данные успешно скопированы\"\n\t\t\t\telse\n\t\t\t\t\techo \"Что-то пошло не так, попробуй еще раз\"\n\t\t\t\tfi\n\t\t\telse\n\t\t\t\techo \"Нужно ли архивирование? (y/n)\"\n\t\t\t\tread choiceARCH\n\t\t\t\tif [[ $choiceARCH = \"y\" ]]\n\t\t\t\tthen\n\t\t\t\t\techo \"Введи имя архива\"\n\t\t\t\t\tread NAME\n\t\t\t\t\tcd $PATHfrom && tar -czf $PATHto$NAME\".tgz\" *\n\t\t\t\t\tif [[ $? = 0 ]]\n\t\t\t\t\tthen\n\t\t\t\t\t\techo \"Данные успешно скопированы\"\n\t\t\t\t\telse\n\t\t\t\t\t\techo \"Что-то пошло не так, попробуй еще раз\"\n\t\t\t\t\tfi\n\t\t\t\telse\n\t\t\t\t\techo \"Введи имя подпапки\"\n\t\t\t\t\tread NAME\n\t\t\t\t\tcd $PATHfrom && rsync -zr * $PATHto$NAME\"/\"\n\t\t\t\t\tif [[ $? = 0 ]]\n\t\t\t\t\tthen\n\t\t\t\t\t\techo \"Данные успешно скопированы\"\n\t\t\t\t\telse\n\t\t\t\t\t\techo \"Что-то пошло не так, попробуй еще раз\"\n\t\t\t\t\tfi\n\t\t\t\tfi\n\n\t\t\tfi\n\t\t;;\n\t\t2)\n\t\t\tDialogCreateEditDelite\t\t\t\n\t\t;;\n\t\t3)\n\t\t\techo \"Резервное копирование осуществляется (запись /10 - означает периодичность по заданной величене с интервалом в 10):\"\n\t\t\tk=1\n\t\t\twhile [[ $k -le $n ]]\n\t\t\tdo\n\t\t\t\tlet 'i=k-1'\n\t\t\t\tsource  $PATHCFG${FCFG[$k]} \n\t\t\t\techo \"Из: \"$PATHfrom\"; В: \"$PATHto\"; Имя файла: \"$NAME\"; Архивация: \"$ARCH\"; Время: \"${H[$k]}\":\"${M[$k]}\"; Дата(месяц . день . день_недели): \"${Mo[$k]}\" . \"${D[$k]}\" . \"${WD[$k]}\n\t\t\t\tlet 'k=k+1'\n\t\t\tdone\t\n\t\t\techo \"\"\n\t\t;;\n\t\t4)\n\t\texit 0\n\t\t;;\n\t\t*)\n\t\techo \"Чувааак, ты ошибся с вводом, попробуй еще раз\"\t\t\n\tesac\ndone\n\n\nexit 0",
+			"file": "/home/maxim/labs_linux/lab8/321.sh",
+			"file_size": 251,
+			"file_write_time": 131447405492066068,
 			"settings":
 			{
-				"buffer_size": 124,
+				"buffer_size": 6652,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#!/bin/bash\n\nARCH=\"arch\"\nSYNC=\"sync\"\nDD=\"dd\"\nPATHfrom=\"\"\nPATHto=\"\"\nSTARS=\" * * \"\n\nsource mybackup.cfg\n\necho \"${H[0]}\" >> test.txt\necho \"${H[1]}\" >> test.txt\necho \"${H[2]}\" >> test.txt\n\n\nchoice=0\necho \"Привет чувак, я скрипт backup, что мне сделать:\"\nwhile [[ $choice != 4 ]]\ndo\n\techo \"1) Сделать резервную копию прям сейчас\"\n\techo \"2) Создать, редактировать, удалить задание на автоматическое резервное копирование\"\n\techo \"3) Показать уже имеющиеся задания на резервное копирование\"\n\techo \"4) Ты зашел сюда случайно и хочешь выйти(((\"\n\techo \"PS Введи цифру и нажми Enter\"\n\tread choice\n\n\tcase $choice in\n\t\t1)\n\t\t\techo \"Что ты хочешь скопировать, введи путь директории или укажи блочное устройство\"\n\t\t\tread PATHfrom\n\t\t\techo \"Куда это скопировать, введи путь директории\"\n\t\t\tread PATHto\n\t\t\tif [[ -b $PATHfrom ]]\n\t\t\tthen\n\t\t\t\techo \"Ты указал блочное устройство, введи имя ISO файла\"\n\t\t\t\tread NAME\n\t\t\t\techo \"Возможно придется долго ждать, дождись завершения процесса\"\n\t\t\t\techo \"или нажми Ctr+c, тогда все прервется и данные могут быть повреждены\"\n\t\t\t\tsudo dd if=$PATHfrom of=$PATHto$NAME\".iso\"\n\t\t\t\tif [[ $? = 0 ]]\n\t\t\t\tthen\n\t\t\t\t\techo \"Данные успешно скопированы\"\n\t\t\t\telse\n\t\t\t\t\techo \"Что-то пошло не так, попробуй еще раз\"\n\t\t\t\tfi\n\t\t\telse\n\t\t\t\techo \"Нужно ли архивирование? (y/n)\"\n\t\t\t\tread choiceARCH\n\t\t\t\tif [[ $choiceARCH = \"y\" ]]\n\t\t\t\tthen\n\t\t\t\t\techo \"Введи имя архива\"\n\t\t\t\t\tread NAME\n\t\t\t\t\tcd $PATHfrom && tar -czf $PATHto$NAME\".tgz\" *\n\t\t\t\t\tif [[ $? = 0 ]]\n\t\t\t\t\tthen\n\t\t\t\t\t\techo \"Данные успешно скопированы\"\n\t\t\t\t\telse\n\t\t\t\t\t\techo \"Что-то пошло не так, попробуй еще раз\"\n\t\t\t\t\tfi\n\t\t\t\telse\n\t\t\t\t\techo \"Введи имя подпапки\"\n\t\t\t\t\tread NAME\n\t\t\t\t\tcd $PATHfrom && rsync -zr * $PATHto$NAME\"/\"\n\t\t\t\t\tif [[ $? = 0 ]]\n\t\t\t\t\tthen\n\t\t\t\t\t\techo \"Данные успешно скопированы\"\n\t\t\t\t\telse\n\t\t\t\t\t\techo \"Что-то пошло не так, попробуй еще раз\"\n\t\t\t\t\tfi\n\t\t\t\tfi\n\n\t\t\tfi\n\n\t\t;;\n\t\t2)\n\n\t\t;;\n\t\t3)\n\t\t\n\t\t;;\n\t\t4)\n\t\texit 0\n\t\t;;\n\t\t*)\n\t\techo \"Чувааак, ты ошибся с вводом, попробуй еще раз\"\t\t\n\tesac\ndone\n\nexit 0\nDialogCreateEditDelite (){\n\tchoice1=0\n\twhile [[ $choice1 != 4 ]]\n\tdo\n\t#Сначало выводи уже имеющиеся а потом диалог\n\techo \"Что ты хочешь сделать:\"\n\techo \"1) Создать\"\n\techo \"2) Редактировать\"\n\techo \"3) Удалить\"\n\techo \"4) В предыдущее меню\"\n\tread choice1\t\n\tcase $choice1 in\n\t\t1)\n\t\t\techo\n\t\t;;\n\t\t2)\n\t\t\techo\n\t\t;;\n\t\t3)\n\t\t\techo\n\t\t;;\n\t\t*)\n\t\t\techo \"Попробуй еще раз\"\n\t\t;;\n\tesac\n\treturn 0\n}\n",
+			"file": "/home/maxim/labs_linux/lab8/123.sh",
+			"file_size": 2668,
+			"file_write_time": 131446919874933669,
+			"settings":
+			{
+				"buffer_size": 2332,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/maxim/labs_linux/lab2/alarmclock.sh",
+			"settings":
+			{
+				"buffer_size": 2901,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -237,6 +355,8 @@
 	],
 	"file_history":
 	[
+		"/home/maxim/labs_c/lab3/main.c",
+		"/home/maxim/labs_c/lab3/test.txt",
 		"/home/maxim/labs_c/lab3/strvar8.sublime-project",
 		"/home/maxim/labs_c/lab3/var8.c",
 		"/home/maxim/labs_c/lab2/var8.c",
@@ -263,6 +383,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"MINUTE",
+			"1",
+			"tmpstr",
 			"vouchers",
 			"\"\n"
 		],
@@ -288,28 +411,28 @@
 			[
 				{
 					"buffer": 0,
-					"file": "main.c",
+					"file": "/home/maxim/labs_linux/lab8/mybackup.sh",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5278,
+						"buffer_size": 11101,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4291,
-								4291
+								5068,
+								5068
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1632.0,
+						"translation.y": 2227.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -317,30 +440,88 @@
 				},
 				{
 					"buffer": 1,
-					"file": "test.txt",
+					"file": "/home/maxim/labs_linux/lab8/321.sh",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 124,
+						"buffer_size": 6652,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								124,
-								124
+								2884,
+								2884
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1335.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/maxim/labs_linux/lab8/123.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2332,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2332,
+								2332
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/maxim/labs_linux/lab2/alarmclock.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2901,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2808,
+								2808
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1938.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -427,7 +608,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 218.0,
+	"side_bar_width": 133.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

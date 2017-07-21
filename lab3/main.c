@@ -119,7 +119,6 @@ int cmpVoucherRouteCost(const void *a, const void *b){
 		return 0;
 	}
 }
-
 void countnumb(char **str[], int *amount, int N){   //Вопрос: почему, когда вместо int *amount было int *amount[] то получалась всякая фигня
 	int j;
 	char *p;
@@ -163,7 +162,9 @@ int mysortbubble(int *amount, char **str[], int N){
 }
 
 int main( int argc, char **argv[]){
+	
 	mtrace();
+
 	printf("%s\n", "Ввод путевок, следуйте указаниям, введите путую строку, чтобы прекратить ввод");
 	int N = -1; //количество введеных структур
 	voucher **vch[MaxVoucher];
