@@ -14,3 +14,4 @@ main: main.c libmath.a
 	gcc -Wall -std=c99 -o main main.o -L/home/maxim/labs_c/lab5/task1/ -lmath -lm 
 clear:
 	rm main main.o math1.o math2.o math3.o libmath.a
+#Комментарий
