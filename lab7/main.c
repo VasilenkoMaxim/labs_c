@@ -6,9 +6,12 @@
 #include <string.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 //#include <sys/siginfo.h>
 
 #define MaxLenStr 4096
+#define FIFO "/tmp/lab7_fifo.0"
 
 /*
 #define MaxStr 1024
@@ -43,12 +46,14 @@ int main(int argc, char **argv){
 		return 1;
 	}
 	int N=atoi(argv[1]);
-	
+	int readfd, writefd;
+	//mkfifo(FIFO, 0666);
+	/*
 	int fd[N][2];
 	for (int i = 0; i < N; ++i){
 		pipe(fd[i]);
 	}
-	
+	*/
 	sigset_t set;
     sigemptyset( &set );
     sigaddset( &set, SIGUSR1);
@@ -65,12 +70,16 @@ int main(int argc, char **argv){
 	for (int i = 0; i < N; ++i)
 	{
 		pid[i]=fork();
+		mkfifo(FIFO, 0666);
 		if (!pid[i]){
 			chaild_pid=getpid();
 			srand(chaild_pid);
 			sigwait( &set, &sig);
-			close(fd[i][1]);
-			read( fd[i][0], buf, MaxLenStr);
+			//close(fd[i][1]);
+			readfd = open(FIFO, O_RDONLY, 0);
+			read( readfd, buf, MaxLenStr);
+			printf("%s\n", buf);
+			close(readfd);
 			N=read_pid_from_str(buf, pid);
 			do{
 				while ( pid[(the_one_who_will_be_killed=rand()%N)]==chaild_pid ){};
@@ -88,11 +97,16 @@ int main(int argc, char **argv){
 		sprintf(bufbuf, "%d\n", pid[i]);
 		strcat(buf, bufbuf);
 	}
+	writefd = open( FIFO, O_WRONLY, 0);
+	/*
 	for (int i = 0; i < N; ++i)
 	{
 		close( fd[i][0]);
 		write( fd[i][1], buf, strlen(buf)+1);	
 	}
+	*/
+	write( writefd, buf, strlen(buf)+1);
+	close( writefd);
 	for (int i = 0; i < N; ++i)
 	{
 		kill( pid[i], SIGUSR1);
