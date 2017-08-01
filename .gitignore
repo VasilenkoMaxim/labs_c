@@ -2,6 +2,8 @@
 *.*
 !*.sh
 main
+main1
+main2
 !README.txt
 !test.txt
 *.[oa]

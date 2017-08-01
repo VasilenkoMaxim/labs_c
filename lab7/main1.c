@@ -1,25 +1,28 @@
- #include <stdio.h>
+    #include <stdio.h>
     #include <signal.h>
     #include <string.h>
     #include <unistd.h>
+    #include <sys/siginfo.h>
      
     struct sigaction act;
      
-    void sighandler(int signum, siginfo_t *info, int *PID)
+    void sighandler(int signum, siginfo_t *info, void *ptr)
     {
-        return info->si_pid;
+        printf("Received signal %d\n", signum);
+        printf("Signal originates from process %lu\n",
+            (unsigned long)info->si_pid);
     }
      
     int main()
     {
         printf("I am %lu\n", (unsigned long)getpid());
+     
         memset(&act, 0, sizeof(act));
+     
         act.sa_sigaction = sighandler;
         act.sa_flags = SA_SIGINFO;
      
-        int PID;
-        sigaction(SIGTERM, &act, &PID);
-        printf("%d\n", PID);
+        sigaction(SIGTERM, &act, NULL);
      
         // Waiting for CTRL+C...
         sleep(100);
