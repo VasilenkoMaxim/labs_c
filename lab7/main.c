@@ -75,8 +75,9 @@ int main(int argc, char **argv){
 			do{
 				while ( pid[(the_one_who_will_be_killed=rand()%N)]==chaild_pid ){};
 				kill( pid[the_one_who_will_be_killed], SIGKILL);
-				//printf("%d убил %d\n", chaild_pid, pid[the_one_who_will_be_killed]);
+				printf("%d убил %d\n", chaild_pid, pid[the_one_who_will_be_killed]);
 				pid[the_one_who_will_be_killed]=pid[N-1];
+				usleep(10);
 				N--;
 			}while(N!=1);
 			kill(parent_pid, SIGUSR1);
