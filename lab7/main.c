@@ -11,7 +11,8 @@
 //#include <sys/siginfo.h>
 
 #define MaxLenStr 4096
-#define FIFO "/tmp/lab7_fifo.0"
+//#define FIFO "/tmp/lab7_fifo.1"
+#define FIFO1 "/tmp/fifo.1"
 
 /*
 #define MaxStr 1024
@@ -47,11 +48,11 @@ int main(int argc, char **argv){
 	}
 	int N=atoi(argv[1]);
 	int readfd, writefd;
-	//mkfifo(FIFO, 0666);
+	mkfifo(FIFO1, 0666);
 	/*
 	int fd[N][2];
 	for (int i = 0; i < N; ++i){
-		pipe(fd[i]);
+		pipe(fd[i]);	
 	}
 	*/
 	sigset_t set;
@@ -67,16 +68,16 @@ int main(int argc, char **argv){
 	int parent_pid=getpid();
 	int chaild_pid;
 	int the_one_who_will_be_killed=-1;
+	/*
 	for (int i = 0; i < N; ++i)
 	{
 		pid[i]=fork();
-		mkfifo(FIFO, 0666);
 		if (!pid[i]){
 			chaild_pid=getpid();
 			srand(chaild_pid);
 			sigwait( &set, &sig);
 			//close(fd[i][1]);
-			readfd = open(FIFO, O_RDONLY, 0);
+			readfd = open(FIFO1, O_RDONLY, 0);
 			read( readfd, buf, MaxLenStr);
 			printf("%s\n", buf);
 			close(readfd);
@@ -93,11 +94,12 @@ int main(int argc, char **argv){
 			exit(0);
 		}	
 	}
+	*/
 	for (int i = 0; i < N; ++i){	
 		sprintf(bufbuf, "%d\n", pid[i]);
 		strcat(buf, bufbuf);
 	}
-	writefd = open( FIFO, O_WRONLY, 0);
+	writefd = open( FIFO1, O_WRONLY, 0);
 	/*
 	for (int i = 0; i < N; ++i)
 	{
@@ -107,6 +109,7 @@ int main(int argc, char **argv){
 	*/
 	write( writefd, buf, strlen(buf)+1);
 	close( writefd);
+	printf("%s\n", "abcd");
 	for (int i = 0; i < N; ++i)
 	{
 		kill( pid[i], SIGUSR1);

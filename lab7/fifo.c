@@ -17,18 +17,15 @@ void doit(char **argv){
 	int readfd, writefd;
 	char buff[MAXLINE+1];
 	ssize_t len, n;
-	
-	pid = fork();
 	mkfifo(FIFO1, 0666);
+	pid = fork();
 	if (-1 == pid) {
 		perror("fork"); /* произошла ошибка */
 		exit(1); /*выход из родительского процесса*/
 	} else if (0 == pid){
 		printf(" CHILD: Это процесс-потомок!\n");
 		len = strlen(argv[1]);
-		printf("%s\n", "abc");
 		writefd = open(FIFO1, O_WRONLY, 0);
-		printf("%s\n", "abc");
 		sleep(5);
 		/* запись в канал IPC */
 		write(writefd, argv[1], len);
