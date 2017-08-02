@@ -68,19 +68,21 @@ int main(int argc, char **argv){
 	int parent_pid=getpid();
 	int chaild_pid;
 	int the_one_who_will_be_killed=-1;
-	/*
 	for (int i = 0; i < N; ++i)
 	{
 		pid[i]=fork();
 		if (!pid[i]){
 			chaild_pid=getpid();
 			srand(chaild_pid);
-			sigwait( &set, &sig);
+			
 			//close(fd[i][1]);
+			printf("%d %s\n", chaild_pid, "abcd");
 			readfd = open(FIFO1, O_RDONLY, 0);
+			printf("%d %s\n", chaild_pid, "abcd");
 			read( readfd, buf, MaxLenStr);
 			printf("%s\n", buf);
 			close(readfd);
+			sigwait( &set, &sig);
 			N=read_pid_from_str(buf, pid);
 			do{
 				while ( pid[(the_one_who_will_be_killed=rand()%N)]==chaild_pid ){};
@@ -94,7 +96,6 @@ int main(int argc, char **argv){
 			exit(0);
 		}	
 	}
-	*/
 	for (int i = 0; i < N; ++i){	
 		sprintf(bufbuf, "%d\n", pid[i]);
 		strcat(buf, bufbuf);
@@ -109,7 +110,7 @@ int main(int argc, char **argv){
 	*/
 	write( writefd, buf, strlen(buf)+1);
 	close( writefd);
-	printf("%s\n", "abcd");
+	printf("%s\n", "abcde");
 	for (int i = 0; i < N; ++i)
 	{
 		kill( pid[i], SIGUSR1);
