@@ -39,7 +39,7 @@ int read_msg_pids(int msgqid, struct mymsgpids *msg, long type){
 #define MaxMas 20
 #define MinLenMas 1
 #define MaxLenMas 1000
-*/
+
 
 //Возвращает количество считаных pid
 int read_pid_from_str(char *str, pid_t *pids){
@@ -75,7 +75,7 @@ int write_pid_to_str(char *str, pid_t *pids, int pids_count, int max_len_str){
 	str[max_len_str]='\0';
 	return 0;
 };
-
+*/
 
 
 int main(int argc, char **argv){
