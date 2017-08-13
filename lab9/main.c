@@ -22,8 +22,7 @@ union semun{
 	struct semid_ds *buf;
 	unsigned short *array;
 	struct semiinfo *__buf;
-}
-
+};
 
 struct vector{
 	float x;
@@ -45,37 +44,42 @@ int main(int argc, char **argv){
 	int max_y;
 
 	//Чтение входных параметров
-	if ( argc < 5 ){
-		fprintf( stderr, "%s\n", "Нужно четыре целочисленных входных аргумента");
-		return 1;
+	if ( argc < 4 ){
+		fprintf( stderr, "%s\n", "Нужно три целочисленных входных аргумента");
+		return 101;
 	}
   	srand( (unsigned) (time(NULL)/2) );
 	int x = atoi(argv[1]);
 	int y = atoi(argv[2]);
 	int Nmap=x*y; // количесво клеток на карте
 	int Naim=rand()%Nmap+1;
-	int Nscout = atoi(argv[4]);
+	int Nscout = atoi(argv[3]);
 	if ( Nscout > MaxChildProc ){
 		fprintf(stderr, "%s\n", "Слишком много разведчиков, <= 1024");
-		return 1;
+		return 102;
 	}
 
 	//Создаем сегмент разделяемой памяти для поля с целями
-	if ( (int shmid_map = shmget(IPC_PRIVATE, sizeof(char)*Nmap, 0444 | IPC_CREAT)) == -1 ){
+	int shmid_map; 
+	if ( (shmid_map = shmget(IPC_PRIVATE, sizeof(char)*Nmap, 0444 | IPC_CREAT)) == -1 ){
+		printf("%d\n", shmid_map);
 		perror("shmget fuck up");
 		exit(1);
 	}
 	//Создаем сегмент разделяемой памяти для поля с информацией о просканированых полях
-	if ( (int shmid_scan = shmget(IPC_PRIVATE, sizeof(int)*Nmap, 0666 | IPC_CREAT)) == -1 ){
+	int shmid_scan;
+	if ( (shmid_scan = shmget(IPC_PRIVATE, sizeof(int)*Nmap, 0666 | IPC_CREAT)) == -1 ){
 		perror("shmget fuck up");
 		exit(1);
 	}
 	//Инициализируем сегменты разделяемой памяти
-	if ( ((char *shm_map = (char *) shmat(shmid_map, NULL, 0)) == (char *) -1) ){
+	char *shm_map;
+	if ( (( shm_map = (char *) shmat(shmid_map, NULL, 0)) == (char *) -1) ){
 		perror("shmat fuck up");
 		exit(1);	
 	}
-	if ( ((int *shm_scan = (int *) shmat(shmid_scan, NULL, 0)) == (int *) -1) ){
+	int *shm_scan;
+	if ( (( shm_scan = (int *) shmat(shmid_scan, NULL, 0)) == (int *) -1) ){
 		perror("shmat fuck up");
 		exit(1);	
 	}
@@ -88,7 +92,7 @@ int main(int argc, char **argv){
 	for (int i = 0; i < Naim; ++i)
 	{	
 		while ( shm_map[( j=rand()%Nmap )] ){};
-		shmid_map[j]=1;
+		shm_map[j]=1;
 	}
 	if ( shmdt(shm_map) == -1 || shmdt(shm_scan) == -1){
 		perror("shmdt fuck up");
@@ -97,9 +101,10 @@ int main(int argc, char **argv){
 	//Главный родительский процесс инициализировал карту
 
 	//Создаем семафор для контроля доступа к shmid_scan
-	if ( (int semid_scan = semget(IPC_PRIVATE, 1, 0666 | IPC_CREAT)) == -1 ){
+	int semid_scan;
+	if ( ( semid_scan = semget(IPC_PRIVATE, 1, 0666 | IPC_CREAT)) == -1 ){
 		perror("semget fuck up");
-		exit(1);
+		exit(2);
 	}
 	//Инициализация семафора
 	struct sembuf lock_res = { 0, -1, 0};
@@ -108,17 +113,12 @@ int main(int argc, char **argv){
 	arg.val=1;
 	if ( semctl( semid_scan, 0, SETVAL, arg) == -1 ){
 		perror("semctl fuck up");
-		exit(1);
+		exit(3);
 	}
 
 	pid_t pid[Nscout];
-	int check1[Nscout];
-	int check2[Nscout];
-	for (int i = 0; i < Nscout; ++i)
-	{
-		check1[i]=0;
-		check2[i]=0;
-	}
+	int	check1=0;
+	int	check2=0;
 	int parent_pid=getpid();
 	int chaild_pid;
 
@@ -127,41 +127,73 @@ int main(int argc, char **argv){
 	float velocity = 1.0;
 	float pi = 3.14;
 	vectors course = { 0.0, 0.0}; 
-	for (int i = 0; i < N; ++i)
+	for (int i = 0; i < Nscout; ++i)
 	{
 		pid[i]=fork();
 		if (pid[i]==-1){
 			perror("fork fuck up");
-			exit(1);
+			exit(4);
 		}else if (!pid[i]){
 			chaild_pid=getpid();
 			//Дочерний процесс определяет свой курс
-			course = { velocity*((float) sin(2*pi*i/N)), velocity*((float) sin(2*pi*i/N))};
-			if ( ((char *shm_map = (char *) shmat(shmid_map, NULL, 0)) == (char *) -1) ){
+			course.y = velocity*((float) sin(2*pi*i/Nscout));
+			course.x = velocity*((float) cos(2*pi*i/Nscout));
+			if ( (( shm_map = (char *) shmat(shmid_map, NULL, 0)) == (char *) -1) ){
 				perror("shmat fuck up");
-				exit(1);	
+				exit(5);	
 			}
-			if ( ((int *shm_scan = (int *) shmat(shmid_scan, NULL, 0)) == (int *) -1) ){
+			if ( (( shm_scan = (int *) shmat(shmid_scan, NULL, 0)) == (int *) -1) ){
 				perror("shmat fuck up");
-				exit(1);	
+				exit(6);	
 			}		
 			do{
 				if ( semop( semid_scan, &lock_res, 1) == -1 ){
 					perror("semop fuck up");
-					exit(1);
+					exit(7);
 				}
 				j=((int) cur_pos.x)+(x-1)*((int) cur_pos.y);
 				if ( shm_map[j] ){
-					check1[i]++;
+					check1++;
 					if ( !shm_scan[j] ){
-						check2[i]++;
-						
+						check2++;
+						shm_scan[j]=chaild_pid;
 					}
 				}
+				printf("\e[1;1H\e[2J");
+				printf("\n");
+				for (int k = 0; k < y; ++k)
+				{
+					for (int l = 0; l < x; ++l)
+					{
+						if ( k==((int) cur_pos.y) && l==((int) cur_pos.x)){
+							printf("%d ", 2);
+						}else
+						{
+							printf("%d ", shm_map[l+(x-1)*k]);
+						}
+
+					}
+					printf("\n");
+				}
+				if ( semop( semid_scan, &relock_res, 1) == -1 ){
+					perror("semop fuck up");
+					exit(8);
+				}
+				sleep(1);
+				add_vectors( &cur_pos, &course);
 			}while ( ((int) cur_pos.x > 0) && ((int) cur_pos.x < x-1) && ((int) cur_pos.y > 0) && ((int) cur_pos.y < y-1));
+			printf("\n");
+			for (int k = 0; k < y; ++k){
+				for (int l = 0; l < x; ++l){
+					printf("%d ", shm_map[l+(x-1)*k]);
+				}
+				printf("\n");
+			}
+			printf("\n");
+			printf("%d %d\n", check1, check2);
 			exit(0);
 		}	
 	}
-	
+	sleep(20);
 	return(0);
 }
