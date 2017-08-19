@@ -1,6 +1,6 @@
 run: main
-	./main 10 10 3
+	./main 20 20 10
 main: main.c
-	gcc -Wall -std=gnu99 main.c -o main -lm
+	gcc -Wall -std=gnu99 main.c -o main -lm -lncursesw -g
 clear:
 	rm main main.o
